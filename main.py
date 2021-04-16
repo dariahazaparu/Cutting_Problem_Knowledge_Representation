@@ -8,7 +8,7 @@ class NodParcurgere:
         self.parinte=parinte #parintele din arborele de parcurgere
         self.g=cost #consider cost=1 pentru o mutare
         self.h=h #euristica
-        self.f=self.g+self.h #estimare
+        self.f=self.g+self.h #suma
 
 
     def obtineDrum(self):
@@ -68,6 +68,27 @@ class Graph: #graful problemei
     def testeazaScop(self, nodCurent):
         return nodCurent.info == self.scop
 
+
+    def calculeaza_cost_linii(self, mat, matrice):
+        # print(matrice)
+        # print(len(mat), len(matrice[0]))
+        return len(matrice[0])/len(mat)
+
+
+    def calculeaza_cost_coloane(self, mat):
+        cost = 0
+        for i in range(len(mat)):
+            for j in range(len(mat[i])):
+                if i != len(mat) - 1:
+                    if mat[i][j] != mat[i+1][j]:
+                        cost += 1
+                if j != len(mat[len(mat)-1]) - 1:
+                    if mat[i][j] != mat[i][j+1]:
+                        cost += 1
+        return 1+ cost/(len(mat))
+
+
+
     def genereazaSuccesori(self, nodCurent, tip_euristica="euristica banala"):
         listaSuccesori = []
         matrice = nodCurent.info
@@ -77,22 +98,26 @@ class Graph: #graful problemei
                     succ = matrice[i:j+1]
                     if succ == matrice:
                         continue
-                    listaSuccesori.append(NodParcurgere(succ, nodCurent))
+                    rest = matrice[:i] + matrice[j+1:]
+                    cost = self.calculeaza_cost_linii(rest, matrice)
+                    # print (cost)
+                    listaSuccesori.append(NodParcurgere(succ, nodCurent, nodCurent.g + cost))
         else:
             for i in range(len(matrice[0])):
                 for j in range(i, len(matrice[0])):
                     succ = []
+                    rest = []
                     for linie in matrice:
                         succ.append(linie[i:j+1])
+                        rest.append(linie[:i] + linie[j+1:])
                     if succ == matrice:
                         continue
-                    listaSuccesori.append(NodParcurgere(succ, nodCurent))
+                    cost = self.calculeaza_cost_coloane(rest)
+                    # print (rest, cost)
+                    listaSuccesori.append(NodParcurgere(succ, nodCurent, nodCurent.g + cost))
 
         return listaSuccesori
-        # if not nodCurent.contineInDrum(copieMatrice):  # and not self.nuAreSolutii(copieMatrice):
-        #     costArc = 1
-        #     listaSuccesori.append(NodParcurgere(copieMatrice, nodCurent, nodCurent.g + costArc,
-        #                                         self.calculeaza_h(copieMatrice, tip_euristica)))
+
 
 def read():
 
@@ -137,6 +162,7 @@ def out():
     f = open("output1.txt", "w")
     f.close()
 
+
 initial, final, timeout = read()
 initial2 = initial[:2]
 c = NodParcurgere(initial, None)
@@ -147,10 +173,3 @@ lista = graf.genereazaSuccesori(c)
 print (*lista, sep = '\n')
 lista = graf.genereazaSuccesori(d)
 print (*lista, sep = '\n')
-# print(d.parinte)
-# l = d.obtineDrum()
-# print(l)
-# l = d.afisDrum(True)
-# print(l)
-# l = d.contineInDrum(c)
-# print(l)
