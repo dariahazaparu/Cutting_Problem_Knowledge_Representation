@@ -1,5 +1,5 @@
 import sys
-# import copy
+import time
 
 
 class NodParcurgere:
@@ -60,6 +60,7 @@ class Graph: #graful problemei
     def __init__(self, initial, finish):
         self.start = NodParcurgere(initial, None)
         self.scop = finish
+        self.eur = len(initial) - len(finish) if len(initial) - len(finish) > 0 else 1
         # print(self.start)
         #verificarea corectitudinii starii de start
         # print(self.scop)
@@ -69,10 +70,8 @@ class Graph: #graful problemei
         return nodCurent.info == self.scop
 
 
-    def calculeaza_cost_linii(self, mat, matrice):
-        # print(matrice)
-        # print(len(mat), len(matrice[0]))
-        return len(matrice[0])/len(mat)
+    def calculeaza_cost_linii(self, succ, matrice):
+        return len(matrice[0])/len(succ)
 
 
     def calculeaza_cost_coloane(self, mat):
@@ -85,38 +84,193 @@ class Graph: #graful problemei
                 if j != len(mat[len(mat)-1]) - 1:
                     if mat[i][j] != mat[i][j+1]:
                         cost += 1
-        return 1+ cost/(len(mat))
+        return 1+ cost/(len(mat[0]))
 
+
+    def calculeaza_euristica_banala(self, cost, mat):
+        return cost/self.eur
 
 
     def genereazaSuccesori(self, nodCurent, tip_euristica="euristica banala"):
         listaSuccesori = []
         matrice = nodCurent.info
-        if len(matrice) > len(self.scop):
-            for i in range(len(matrice)):
-                for j in range(i, len(matrice)):
-                    succ = matrice[i:j+1]
-                    if succ == matrice:
-                        continue
-                    rest = matrice[:i] + matrice[j+1:]
-                    cost = self.calculeaza_cost_linii(rest, matrice)
-                    # print (cost)
-                    listaSuccesori.append(NodParcurgere(succ, nodCurent, nodCurent.g + cost))
-        else:
-            for i in range(len(matrice[0])):
-                for j in range(i, len(matrice[0])):
-                    succ = []
-                    rest = []
-                    for linie in matrice:
-                        succ.append(linie[i:j+1])
-                        rest.append(linie[:i] + linie[j+1:])
-                    if succ == matrice:
-                        continue
-                    cost = self.calculeaza_cost_coloane(rest)
-                    # print (rest, cost)
-                    listaSuccesori.append(NodParcurgere(succ, nodCurent, nodCurent.g + cost))
+        for i in range(len(matrice)):
+            for j in range(i, len(matrice)):
+                succ = matrice[i:j+1]
+                if succ == matrice:
+                    continue
+                rest = matrice[:i] + matrice[j+1:]
+                cost = self.calculeaza_cost_linii(succ, matrice)
+                eur = self.calculeaza_euristica_banala(cost, rest)
+                # print (eur)
+                listaSuccesori.append(NodParcurgere(rest, nodCurent, nodCurent.g + cost, eur))
+
+        for i in range(len(matrice[0])):
+            for j in range(i, len(matrice[0])):
+                succ = []
+                rest = []
+                for linie in matrice:
+                    succ.append(linie[i:j+1])
+                    rest.append(linie[:i] + linie[j+1:])
+                if succ == matrice:
+                    continue
+                cost = self.calculeaza_cost_coloane(succ)
+                eur = self.calculeaza_euristica_banala(cost, rest)
+                # print (eur)
+                listaSuccesori.append(NodParcurgere(rest, nodCurent, nodCurent.g + cost, eur))
 
         return listaSuccesori
+
+
+def uniformCost(gr, nrSolutiiCautate=1):
+    c = [gr.start]
+
+    while len(c) > 0:
+        # print("Coada actuala: " + str(c))
+        # input()
+        nodCurent = c.pop(0)
+
+        if gr.testeazaScop(nodCurent):
+            print("Solutie: ", end="\n")
+            nodCurent.afisDrum(True)
+            print("\n----------------\n")
+            nrSolutiiCautate -= 1
+            if nrSolutiiCautate == 0:
+                return
+        lSuccesori = gr.genereazaSuccesori(nodCurent)
+        for s in lSuccesori:
+            i = 0
+            gasit_loc = False
+            for i in range(len(c)):
+                if c[i].g > s.g:
+                    gasit_loc = True
+                    break
+            if gasit_loc:
+                c.insert(i, s)
+            else:
+                c.append(s)
+
+
+def aStar(gr, nrSolutiiCautate=1):
+    c = [gr.start]
+
+    while len(c) > 0:
+        # print("Coada actuala: " + str(c))
+        # input()
+        nodCurent = c.pop(0)
+
+        if gr.testeazaScop(nodCurent):
+            print("Solutie: ", end="\n")
+            nodCurent.afisDrum(True)
+            print("\n----------------\n")
+            nrSolutiiCautate -= 1
+            if nrSolutiiCautate == 0:
+                return
+        lSuccesori = gr.genereazaSuccesori(nodCurent)
+        for s in lSuccesori:
+            i = 0
+            gasit_loc = False
+            for i in range(len(c)):
+                if c[i].f > s.f:
+                    gasit_loc = True
+                    break
+            if gasit_loc:
+                c.insert(i, s)
+            else:
+                c.append(s)
+
+
+def aStarOpt(gr):
+    # in coada vom avea doar noduri de tip NodParcurgere (nodurile din arborele de parcurgere)
+    l_open = [gr.start]
+
+    # l_open contine nodurile candidate pentru expandare
+
+    # l_closed contine nodurile expandate
+    l_closed = []
+    while len(l_open) > 0:
+        # print("Coada actuala: " + str(l_open))
+        # input()
+        nodCurent = l_open.pop(0)
+        l_closed.append(nodCurent)
+        if gr.testeaza_scop(nodCurent):
+            print("Solutie: ", end="\n")
+            nodCurent.afisDrum()
+            print("\n----------------\n")
+            return
+        lSuccesori = gr.genereazaSuccesori(nodCurent)
+        for s in lSuccesori:
+            gasitC = False
+            for nodC in l_open:
+                if s.info == nodC.info:
+                    gasitC = True
+                    if s.f >= nodC.f:
+                        lSuccesori.remove(s)
+                    else:  # s.f<nodC.f
+                        l_open.remove(nodC)
+                    break
+            if not gasitC:
+                for nodC in l_closed:
+                    if s.info == nodC.info:
+                        if s.f >= nodC.f:
+                            lSuccesori.remove(s)
+                        else:  # s.f<nodC.f
+                            l_closed.remove(nodC)
+                        break
+        for s in lSuccesori:
+            i = 0
+            gasit_loc = False
+            for i in range(len(l_open)):
+                # diferenta fata de UCS e ca ordonez crescator dupa f
+                # daca f-urile sunt egale ordonez descrescator dupa g
+                if l_open[i].f > s.f or (l_open[i].f == s.f and l_open[i].g <= s.g):
+                    gasit_loc = True
+                    break
+            if gasit_loc:
+                l_open.insert(i, s)
+            else:
+                l_open.append(s)
+
+
+def ida_star(gr, nrSolutiiCautate):
+    nodStart = gr.start
+    limita = nodStart.f
+    while True:
+
+        print("Limita de pornire: ", limita)
+        nrSolutiiCautate, rez = construieste_drum(gr, nodStart, limita, nrSolutiiCautate)
+        if rez == "gata":
+            break
+        if rez == float('inf'):
+            print("Nu exista solutii!")
+            break
+        limita = rez
+        print(">>> Limita noua: ", limita)
+
+
+def construieste_drum(gr, nodCurent, limita, nrSolutiiCautate):
+    print("A ajuns la: ", nodCurent)
+    if nodCurent.f > limita:
+        return nrSolutiiCautate, nodCurent.f
+    if gr.testeazaScop(nodCurent) and nodCurent.f == limita:
+        print("Solutie: ")
+        nodCurent.afisDrum(True)
+        print(limita)
+        print("\n----------------\n")
+        nrSolutiiCautate -= 1
+        if nrSolutiiCautate == 0:
+            return 0, "gata"
+    lSuccesori = gr.genereazaSuccesori(nodCurent)
+    minim = float('inf')
+    for s in lSuccesori:
+        nrSolutiiCautate, rez = construieste_drum(gr, s, limita, nrSolutiiCautate)
+        if rez == "gata":
+            return 0, "gata"
+        print("Compara ", rez, " cu ", minim)
+        if rez < minim:
+            minim = rez
+            print("Noul minim: ", minim)
+    return nrSolutiiCautate, minim
 
 
 def read():
@@ -169,7 +323,22 @@ c = NodParcurgere(initial, None)
 d = NodParcurgere(initial2, c)
 
 graf = Graph(initial, final)
-lista = graf.genereazaSuccesori(c)
-print (*lista, sep = '\n')
-lista = graf.genereazaSuccesori(d)
-print (*lista, sep = '\n')
+t = time.time()
+uniformCost(graf, 4)
+e = time.time()
+print (e-t)
+print ("###############################################")
+t = time.time()
+aStar(graf, 4)
+e = time.time()
+print (e-t)
+print ("###############################################")
+t = time.time()
+aStar(graf, 4)
+e = time.time()
+print (e-t)
+print ("###############################################")
+t = time.time()
+ida_star(graf, 1)
+e = time.time()
+print (e-t)

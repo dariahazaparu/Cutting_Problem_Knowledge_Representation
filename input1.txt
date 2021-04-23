@@ -1,8 +1,7 @@
-ddaabbb
-aaaffxc
-aabccdc
-adddaab
+ddaab
+aaaff
+aabcc
 
-abb
-axc
+ab
+bc
 3
