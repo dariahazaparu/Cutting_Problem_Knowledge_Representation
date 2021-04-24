@@ -1,0 +1,23 @@
+A* optimizat
+
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+
+Nodul 20:
+ddaa
+aaaf
+aabc
+
+Nodul 114:
+aa
+af
+bc
+
+Cost: 5.0
+Lungime: 3
+
+Timp de executie: 0.01599740982055664 secunde
+Total noduri: 545

@@ -1,4 +1,4 @@
-Uniform Cost
+A* euristica banala
 
 *Solutie*
 Nodul 1:
@@ -68,5 +68,5 @@ Lungime: 4
 
 
 -------------------------
-Timp de executie: 0.2689993381500244 secunde
+Timp de executie: 0.27199387550354004 secunde
 Total noduri: 2918

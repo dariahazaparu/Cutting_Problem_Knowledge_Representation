@@ -1,5 +1,26 @@
-Uniform Cost
+A* euristica 1
 
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+
+Nodul 20:
+ddaa
+aaaf
+aabc
+
+Nodul 554:
+aa
+af
+bc
+
+Cost: 5.0
+Lungime: 3
+
+
+-------------------------
 *Solutie*
 Nodul 1:
 ddaab
@@ -32,33 +53,12 @@ ddaa
 aaaf
 aabc
 
-Nodul 138:
-aa
-af
-bc
+Nodul 553:
+daa
+aaf
+abc
 
-Cost: 5.0
-Lungime: 3
-
-
--------------------------
-*Solutie*
-Nodul 1:
-ddaab
-aaaff
-aabcc
-
-Nodul 7:
-daab
-aaff
-abcc
-
-Nodul 26:
-aab
-aff
-bcc
-
-Nodul 351:
+Nodul 1302:
 aa
 af
 bc
@@ -68,5 +68,5 @@ Lungime: 4
 
 
 -------------------------
-Timp de executie: 0.2689993381500244 secunde
-Total noduri: 2918
+Timp de executie: 0.1570298671722412 secunde
+Total noduri: 2844
