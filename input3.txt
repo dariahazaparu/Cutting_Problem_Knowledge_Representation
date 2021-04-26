@@ -1,6 +1,8 @@
 ddaab
 aaaff
 aabcc
+bbbff
+dadad
 
 aa
 af
