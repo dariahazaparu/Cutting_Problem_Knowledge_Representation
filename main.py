@@ -1,6 +1,8 @@
 import sys
 import time
 import stopit
+
+
 # from multiprocessing import Pool, TimeoutError
 
 
@@ -152,6 +154,7 @@ class Graph:
         return listaSuccesori
 
 
+@stopit.threading_timeoutable(default="UCS timeout")
 def uniformCost(gr, nrSolutiiCautate=1):
     print("UCS running...")
     global ind
@@ -184,8 +187,7 @@ def uniformCost(gr, nrSolutiiCautate=1):
                 output += "Numar de noduri existente la un moment dat: " + str(MAX) + '\n'
                 output += "Total noduri: " + str(ind) + '\n'
                 out(output, "ucs.txt")
-                print("UCS finished")
-                return
+                return "UCS finished"
         lSuccesori = gr.genereazaSuccesori(nodCurent)
         for s in lSuccesori:
             i = 0
@@ -200,6 +202,7 @@ def uniformCost(gr, nrSolutiiCautate=1):
                 c.append(s)
 
 
+@stopit.threading_timeoutable(default="A* timeout")
 def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
     print(f"A* {tip_euristica} running...")
 
@@ -239,8 +242,8 @@ def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
                 if tip_euristica == "euristica 3":
                     fisier = "astareur3.txt"
                 out(output, fisier)
-                print(f"A* {tip_euristica} finished")
-                return
+                return f"A* {tip_euristica} finished"
+
         lSuccesori = gr.genereazaSuccesori(nodCurent, tip_euristica)
         for s in lSuccesori:
             i = 0
@@ -255,6 +258,7 @@ def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
                 c.append(s)
 
 
+@stopit.threading_timeoutable(default="A* opt timeout")
 def aStarOpt(gr, tip_euristica="euristica banala"):
     print(f"A* opt {tip_euristica} running...")
 
@@ -294,8 +298,8 @@ def aStarOpt(gr, tip_euristica="euristica banala"):
             if tip_euristica == "euristica 3":
                 fisier = "astartopteur3.txt"
             out(output, fisier)
-            print(f"A* opt {tip_euristica} finished")
-            return
+            return f"A* opt {tip_euristica} finished"
+
         lSuccesori = gr.genereazaSuccesori(nodCurent, tip_euristica)
         for s in lSuccesori:
             gasitC = False
@@ -328,6 +332,7 @@ def aStarOpt(gr, tip_euristica="euristica banala"):
                 l_open.append(s)
 
 
+@stopit.threading_timeoutable(default="IDA* timeout")
 def idaStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
     print(f"IDA* {tip_euristica} running...")
 
@@ -359,7 +364,7 @@ def idaStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
         limita = rez
 
     f.close()
-    print(f"IDA* {tip_euristica} finished")
+    return f"IDA* {tip_euristica} finished"
 
 
 def construieste_drum(gr, nodCurent, tip_euristica, limita, nrSolutiiCautate, f, t, MAX):
@@ -446,26 +451,38 @@ def out(output, fisier):
 
 
 def main_without_time():
-
     k, initial, final, time_out = read()
     graf = Graph(initial, final)
 
-    uniformCost(graf, k)
+    ans = uniformCost(graf, k, timeout=time_out)
+    print(ans)
 
-    aStar(graf, k)
-    aStar(graf, k, "euristica 1")
-    aStar(graf, k, "euristica 2")
-    aStar(graf, k, "euristica 3")
+    ans = aStar(graf, k, timeout=k)
+    print(ans)
+    ans = aStar(graf, k, "euristica 1", timeout=time_out)
+    print(ans)
+    ans = aStar(graf, k, "euristica 2", timeout=time_out)
+    print(ans)
+    ans = aStar(graf, k, "euristica 3", timeout=time_out)
+    print(ans)
 
-    aStarOpt(graf)
-    aStarOpt(graf, "euristica 1")
-    aStarOpt(graf, "euristica 2")
-    aStarOpt(graf, "euristica 3")
+    ans = aStarOpt(graf, timeout=k)
+    print(ans)
+    ans = aStarOpt(graf, "euristica 1", timeout=time_out)
+    print(ans)
+    ans = aStarOpt(graf, "euristica 2", timeout=time_out)
+    print(ans)
+    ans = aStarOpt(graf, "euristica 3", timeout=time_out)
+    print(ans)
 
-    idaStar(graf, k)
-    idaStar(graf, k, "euristica 1")
-    idaStar(graf, k, "euristica 2")
-    idaStar(graf, k, "euristica 3")
+    ans = idaStar(graf, k, timeout=k)
+    print(ans)
+    ans = idaStar(graf, k, "euristica 1", timeout=time_out)
+    print(ans)
+    ans = idaStar(graf, k, "euristica 2", timeout=time_out)
+    print(ans)
+    ans = idaStar(graf, k, "euristica 3", timeout=time_out)
+    print(ans)
 
 
 if __name__ == '__main__':

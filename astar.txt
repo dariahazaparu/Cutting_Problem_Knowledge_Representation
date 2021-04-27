@@ -2,32 +2,32 @@ A* euristica banala
 
 *Solutie*
 Nodul 1:
-ddaaba
-aaafff
-aabccd
-bbaafa
-dadada
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
 
 Nodul 14:
-ddaaba
-aaafff
-aabccd
+ddaab
+aaaff
+aabcc
 
-Nodul 114:
-aaba
-afff
-bccd
+Nodul 90:
+aab
+aff
+bcc
 
-Nodul 623:
+Nodul 404:
 aa
 af
-bd
+bc
 
-Cost: 8.5
+Cost: 7.5
 Lungime: 4
 
 
 -------------------------
-Timp de executie: 2.779961109161377 secunde
-Numar de noduri existente la un moment dat: 6534
-Total noduri: 9493
+Timp de executie: 0.5010733604431152 secunde
+Numar de noduri existente la un moment dat: 2641
+Total noduri: 4390

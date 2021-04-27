@@ -2,33 +2,93 @@ IDA* euristica banala
 
 *Solutie*
 Nodul 1:
-ddaaba
-aaafff
-aabccd
-bbaafa
-dadada
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
 
-Nodul 229124:
-ddaaba
-aaafff
-aabccd
+Nodul 61969:
+ddaab
+aaaff
+aabcc
 
-Nodul 234884:
-aaba
-afff
-bccd
+Nodul 64017:
+aab
+aff
+bcc
 
-Nodul 235694:
+Nodul 64407:
 aa
 af
-bd
+bc
 
-Cost: 8.5
+Cost: 7.5
 Lungime: 4
 
-Limita: 9.5
+Limita: 8.5
 
 ----------------
-Timp de executie: 1.7939996719360352 secunde
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
+
+Nodul 61969:
+ddaab
+aaaff
+aabcc
+
+Nodul 64029:
+ddaa
+aaaf
+aabc
+
+Nodul 64882:
+aa
+af
+bc
+
+Cost: 7.5
+Lungime: 4
+
+Limita: 8.5
+
+----------------
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
+
+Nodul 232882:
+aab
+aff
+bcc
+bff
+dad
+
+Nodul 241850:
+aab
+aff
+bcc
+
+Nodul 242357:
+aa
+af
+bc
+
+Cost: 9.0
+Lungime: 4
+
+Limita: 10.0
+
+----------------
+Timp de executie: 1.6039941310882568 secunde
 Numar de noduri existente la un moment dat: 0
-Total noduri: 235730
+Total noduri: 242405

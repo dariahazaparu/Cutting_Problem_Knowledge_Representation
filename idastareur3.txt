@@ -2,33 +2,101 @@ IDA* euristica 3
 
 *Solutie*
 Nodul 1:
-ddaaba
-aaafff
-aabccd
-bbaafa
-dadada
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
 
-Nodul 2460594:
-ddaaba
-aaafff
-aabccd
+Nodul 94740:
+ddaab
+aaaff
+aabcc
 
-Nodul 2575192:
-aaba
-afff
-bccd
+Nodul 107019:
+ddaa
+aaaf
+aabc
 
-Nodul 2594823:
+Nodul 111845:
+daa
+aaf
+abc
+
+Nodul 112121:
 aa
 af
-bd
+bc
 
-Cost: 8.5
-Lungime: 4
+Cost: 9.5
+Lungime: 5
 
-Limita: 19.0
+Limita: 15.5
 
 ----------------
-Timp de executie: 19.735539436340332 secunde
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
+
+Nodul 94740:
+ddaab
+aaaff
+aabcc
+
+Nodul 107019:
+ddaa
+aaaf
+aabc
+
+Nodul 111848:
+daa
+aaf
+abc
+
+Nodul 112300:
+aa
+af
+bc
+
+Cost: 9.5
+Lungime: 5
+
+Limita: 15.5
+
+----------------
+*Solutie*
+Nodul 1:
+ddaab
+aaaff
+aabcc
+bbbff
+dadad
+
+Nodul 250147:
+ddaab
+aaaff
+aabcc
+
+Nodul 273428:
+aab
+aff
+bcc
+
+Nodul 278408:
+aa
+af
+bc
+
+Cost: 7.5
+Lungime: 4
+
+Limita: 16.5
+
+----------------
+Timp de executie: 2.062044382095337 secunde
 Numar de noduri existente la un moment dat: 0
-Total noduri: 2595724
+Total noduri: 278618
