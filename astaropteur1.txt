@@ -2,29 +2,29 @@ A* optimizat euristica 1
 
 *Solutie*
 Nodul 1:
-ddaab
-aaaff
-aabcc
-bbbff
-dadad
+ddaaba
+aaafff
+aabccd
+bbaafa
+dadada
 
 Nodul 14:
-ddaab
-aaaff
-aabcc
+ddaaba
+aaafff
+aabccd
 
-Nodul 75:
+Nodul 312:
 ddaa
 aaaf
-aabc
+aabd
 
-Nodul 1492:
+Nodul 3934:
 aa
 af
-bc
+bd
 
-Cost: 7.5
+Cost: 8.5
 Lungime: 4
-Timp de executie: 0.037995338439941406 secunde
-Numar de noduri existente la un moment dat: 279
-Total noduri: 1519
+Timp de executie: 0.1929948329925537 secunde
+Numar de noduri existente la un moment dat: 1543
+Total noduri: 3961

@@ -2,29 +2,29 @@ A* optimizat euristica banala
 
 *Solutie*
 Nodul 1:
-ddaab
-aaaff
-aabcc
-bbbff
-dadad
+ddaaba
+aaafff
+aabccd
+bbaafa
+dadada
 
 Nodul 14:
-ddaab
-aaaff
-aabcc
+ddaaba
+aaafff
+aabccd
 
-Nodul 52:
-aab
-aff
-bcc
+Nodul 80:
+aaba
+afff
+bccd
 
-Nodul 399:
+Nodul 665:
 aa
 af
-bc
+bd
 
-Cost: 7.5
+Cost: 8.5
 Lungime: 4
-Timp de executie: 0.15999102592468262 secunde
-Numar de noduri existente la un moment dat: 798
-Total noduri: 2862
+Timp de executie: 0.45499610900878906 secunde
+Numar de noduri existente la un moment dat: 2296
+Total noduri: 5330

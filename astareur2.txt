@@ -2,32 +2,37 @@ A* euristica 2
 
 *Solutie*
 Nodul 1:
-ddaab
-aaaff
-aabcc
-bbbff
-dadad
+ddaaba
+aaafff
+aabccd
+bbaafa
+dadada
 
 Nodul 14:
-ddaab
-aaaff
-aabcc
+ddaaba
+aaafff
+aabccd
 
-Nodul 288:
+Nodul 4410:
+ddaba
+aaaff
+aabcd
+
+Nodul 17215:
 ddaa
 aaaf
-aabc
+aabd
 
-Nodul 5418:
+Nodul 28707:
 aa
 af
-bc
+bd
 
-Cost: 7.5
-Lungime: 4
+Cost: 11.0
+Lungime: 5
 
 
 -------------------------
-Timp de executie: 0.07614660263061523 secunde
-Numar de noduri existente la un moment dat: 637
-Total noduri: 5508
+Timp de executie: 1.1480011940002441 secunde
+Numar de noduri existente la un moment dat: 3191
+Total noduri: 28797

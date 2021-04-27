@@ -1,5 +1,7 @@
 import sys
 import time
+import stopit
+# from multiprocessing import Pool, TimeoutError
 
 
 class NodParcurgere:
@@ -82,7 +84,7 @@ class Graph:
         return cost * self.eur1
 
     def calculeaza_euristica_2(self, cost):
-        return cost * (1+self.eur2)
+        return cost * (1 + self.eur2)
 
     def calculeaza_euristica_3(self, cost, rest):
         return cost * len(rest)
@@ -151,6 +153,7 @@ class Graph:
 
 
 def uniformCost(gr, nrSolutiiCautate=1):
+    print("UCS running...")
     global ind
     ind = 1
 
@@ -181,6 +184,7 @@ def uniformCost(gr, nrSolutiiCautate=1):
                 output += "Numar de noduri existente la un moment dat: " + str(MAX) + '\n'
                 output += "Total noduri: " + str(ind) + '\n'
                 out(output, "ucs.txt")
+                print("UCS finished")
                 return
         lSuccesori = gr.genereazaSuccesori(nodCurent)
         for s in lSuccesori:
@@ -197,6 +201,8 @@ def uniformCost(gr, nrSolutiiCautate=1):
 
 
 def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
+    print(f"A* {tip_euristica} running...")
+
     global ind
     ind = 1
     c = [gr.start]
@@ -233,6 +239,7 @@ def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
                 if tip_euristica == "euristica 3":
                     fisier = "astareur3.txt"
                 out(output, fisier)
+                print(f"A* {tip_euristica} finished")
                 return
         lSuccesori = gr.genereazaSuccesori(nodCurent, tip_euristica)
         for s in lSuccesori:
@@ -249,6 +256,8 @@ def aStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
 
 
 def aStarOpt(gr, tip_euristica="euristica banala"):
+    print(f"A* opt {tip_euristica} running...")
+
     global ind
     ind = 1
 
@@ -260,7 +269,7 @@ def aStarOpt(gr, tip_euristica="euristica banala"):
     l_closed = []
     while len(l_open) > 0:
 
-        ln = len(l_open)
+        ln = len(l_open) + len(l_closed)
         if ln > MAX:
             MAX = ln
 
@@ -285,6 +294,7 @@ def aStarOpt(gr, tip_euristica="euristica banala"):
             if tip_euristica == "euristica 3":
                 fisier = "astartopteur3.txt"
             out(output, fisier)
+            print(f"A* opt {tip_euristica} finished")
             return
         lSuccesori = gr.genereazaSuccesori(nodCurent, tip_euristica)
         for s in lSuccesori:
@@ -318,7 +328,9 @@ def aStarOpt(gr, tip_euristica="euristica banala"):
                 l_open.append(s)
 
 
-def ida_star(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
+def idaStar(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
+    print(f"IDA* {tip_euristica} running...")
+
     global ind
     ind = 1
 
@@ -347,6 +359,7 @@ def ida_star(gr, nrSolutiiCautate=1, tip_euristica="euristica banala"):
         limita = rez
 
     f.close()
+    print(f"IDA* {tip_euristica} finished")
 
 
 def construieste_drum(gr, nodCurent, tip_euristica, limita, nrSolutiiCautate, f, t, MAX):
@@ -432,23 +445,28 @@ def out(output, fisier):
     f.close()
 
 
-k, initial, final, timeout = read()
+def main_without_time():
 
-graf = Graph(initial, final)
+    k, initial, final, time_out = read()
+    graf = Graph(initial, final)
 
-uniformCost(graf, k)
+    uniformCost(graf, k)
 
-aStar(graf, k)
-aStar(graf, k, "euristica 1")
-aStar(graf, k, "euristica 2")
-aStar(graf, k, "euristica 3")
+    aStar(graf, k)
+    aStar(graf, k, "euristica 1")
+    aStar(graf, k, "euristica 2")
+    aStar(graf, k, "euristica 3")
 
-aStarOpt(graf)
-aStarOpt(graf, "euristica 1")
-aStarOpt(graf, "euristica 2")
-aStarOpt(graf, "euristica 3")
+    aStarOpt(graf)
+    aStarOpt(graf, "euristica 1")
+    aStarOpt(graf, "euristica 2")
+    aStarOpt(graf, "euristica 3")
 
-ida_star(graf, k)
-ida_star(graf, k, "euristica 1")
-ida_star(graf, k, "euristica 2")
-ida_star(graf, k, "euristica 3")
+    idaStar(graf, k)
+    idaStar(graf, k, "euristica 1")
+    idaStar(graf, k, "euristica 2")
+    idaStar(graf, k, "euristica 3")
+
+
+if __name__ == '__main__':
+    main_without_time()

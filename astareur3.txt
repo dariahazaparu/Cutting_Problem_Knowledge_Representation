@@ -2,32 +2,32 @@ A* euristica 3
 
 *Solutie*
 Nodul 1:
-ddaab
-aaaff
-aabcc
-bbbff
-dadad
+ddaaba
+aaafff
+aabccd
+bbaafa
+dadada
 
 Nodul 14:
-ddaab
-aaaff
-aabcc
+ddaaba
+aaafff
+aabccd
 
-Nodul 113:
+Nodul 332:
 ddaa
 aaaf
-aabc
+aabd
 
-Nodul 9136:
+Nodul 43026:
 aa
 af
-bc
+bd
 
-Cost: 7.5
+Cost: 8.5
 Lungime: 4
 
 
 -------------------------
-Timp de executie: 0.540557861328125 secunde
-Numar de noduri existente la un moment dat: 2638
-Total noduri: 9284
+Timp de executie: 7.6530234813690186 secunde
+Numar de noduri existente la un moment dat: 9114
+Total noduri: 43174
